@@ -1,28 +1,37 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <div class="card">
+      <UsersComponent :propUser="users" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UsersComponent from './components/Users.vue';
+import UsersService from './service/UsersService';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    UsersComponent
+  },
+  data() {
+    return {
+      users: null
+    };
+  },
+  usersService: null,
+  created() {
+    this.usersService = new UsersService();
+  },
+  mounted() {
+    this.usersService.getUsers().then((data) => (this.users = data));
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.app {
+  padding: 2% 15%;
+  background: #f8f9fa;
 }
 </style>
